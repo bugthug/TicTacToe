@@ -521,3 +521,59 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+
+.grid {
+  display: grid;
+}
+
+.auto-rows-max {
+  grid-auto-rows: max-content;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.border-b-4 {
+  border-bottom-width: 4px;
+}
+
+.border-l-4 {
+  border-left-width: 4px;
+}
+
+.border-r-4 {
+  border-right-width: 4px;
+}
+
+.border-b-slate-800 {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.border-r-slate-800 {
+  --tw-border-opacity: 1;
+  border-right-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.\[\&\>\*\]\:border-8>* {
+  border-width: 8px;
+}
+
+.\[\&\>\*\]\:border-b-4>* {
+  border-bottom-width: 4px;
+}
+
+.\[\&\>\*\]\:border-slate-800>* {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.\[\&\>\*\]\:border-b-slate-800>* {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.\[\&\>\*\]\:p-5>* {
+  padding: 1.25rem;
+}

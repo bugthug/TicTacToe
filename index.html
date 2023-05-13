@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TicTacToe</title>
     <link rel="stylesheet" href="./dist/output.css">
+    <script src="./script.js" defer></script>
   </head>
-  <body>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+  <body class="grid grid-cols-3 auto-rows-max [&>*]:p-5">
+    <div id="gameBoard" class="grid grid-cols-3 auto-rows-max [&>*]:p-5">
+      <button data-cell-position="0" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800 [&:after]"></button>
+      <button data-cell-position="1" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
+      <button data-cell-position="2" class="border-b-4 border-b-slate-800"></button>
+      <button data-cell-position="3" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
+      <button data-cell-position="4" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
+      <button data-cell-position="5" class="border-b-4 border-b-slate-800"></button>
+      <button data-cell-position="6" class="border-r-4 border-r-slate-800"></button>
+      <button data-cell-position="7" class="border-r-4 border-r-slate-800"></button>
+      <button data-cell-position="8" class=""></div>
+    </div>
   </body>
 </html>
