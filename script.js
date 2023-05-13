@@ -1,8 +1,15 @@
 const gameState = (() => {
   const cellButtonNodeList = document.querySelectorAll("#gameBoard>button");
-  const prevPlayerSymbol = "x";
-  return { prevPlayerSymbol, cellButtonNodeList };
+
+  // See displayController.handleBtnClick for explanation of why
+  const playerSymbol = "x";
+  return { playerSymbol, cellButtonNodeList };
 })();
+
+const playerFactory = (() => {
+    const playerSymbol = 'x';
+    
+})
 
 const gameBoard = (() => {
   const boardCells = [];
@@ -98,8 +105,8 @@ const displayController = (() => {
   function handleBtnClick() {
     let currentPlayerSymbol = "";
     this.disabled = "disabled";
-    if (gameState.prevPlayerSymbol === "x") currentPlayerSymbol = "o";
-    if (gameState.prevPlayerSymbol === "o") currentPlayerSymbol = "x";
+    if (gameState.playerSymbol === "x") currentPlayerSymbol = "o";
+    if (gameState.playerSymbol === "o") currentPlayerSymbol = "x";
 
     const position = this.getAttribute("data-cell-position");
 
@@ -108,12 +115,12 @@ const displayController = (() => {
 
     if (winner !== null) {
       alert(`${winner} is the winner!`);
-      gameState.cellButtonNodeList.forEach((button) => {
+      gameState.cellButtonNodeList.forEach(button => {
         button.disabled = "disabled";
       });
     }
 
-    gameState.prevPlayerSymbol = currentPlayerSymbol;
+    gameState.playerSymbol = currentPlayerSymbol;
   }
 
   const addEventListenerToButtons = () => {
