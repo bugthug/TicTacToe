@@ -100,11 +100,17 @@ const gameBoard = (() => {
 
 const displayController = (() => {
   const cellButtonNodeList = document.querySelectorAll("#game-board>button");
+  const endGameScreenElement = document.querySelector("#end-game");
+  const winnerParagraphElement = document.querySelector("#winner");
+
+  const playersSpan = [];
+  playersSpan[0] = document.querySelector("span#player-one-name");
+  playersSpan[1] = document.querySelector("span#player-two-name");
 
   function setupContinueBtn() {
     function handleClickContinue() {
       displayController.resetGame();
-      this.classList.add("hidden");
+      endGameScreenElement.classList.add("hidden");
     }
 
     const continueBtnElement = document.querySelector("#continueBtn");
@@ -122,7 +128,6 @@ const displayController = (() => {
   function handleCellClick() {
     const playerOneScoreElement = document.querySelector("#player-one-score");
     const playerTwoScoreElement = document.querySelector("#player-two-score");
-    const continueBtnElement = document.querySelector("#continueBtn");
 
     let currentPlayerSymbol = "";
     this.disabled = "disabled";
@@ -136,18 +141,19 @@ const displayController = (() => {
     const winner = gameBoard.whoWon();
 
     if (winner !== null) {
-      alert(`${winner.toUpperCase()} is the winner!`);
       if (winner === "o") {
         playerOneScoreElement.textContent =
           parseInt(playerOneScoreElement.textContent, 10) + 1;
-      } else {
+        winnerParagraphElement.textContent = playersSpan[0].textContent;
+      } else if (winner === "x") {
         playerTwoScoreElement.textContent =
           parseInt(playerTwoScoreElement.textContent, 10) + 1;
+        winnerParagraphElement.textContent = playersSpan[1].textContent;
       }
       cellButtonNodeList.forEach((button) => {
         button.disabled = "disabled";
       });
-      continueBtnElement.classList.remove("hidden");
+      endGameScreenElement.classList.remove("hidden");
     } else {
       (function detectTie() {
         let isTie = true;
@@ -155,8 +161,8 @@ const displayController = (() => {
           if (!cell.disabled) isTie = false;
         });
         if (isTie) {
-          alert("Tie!");
-          continueBtnElement.classList.remove("hidden");
+          winnerParagraphElement.text = "Nobody";
+          endGameScreenElement.classList.remove("hidden");
         }
       })();
     }
@@ -177,7 +183,6 @@ const displayController = (() => {
       const formElement = document.querySelector("form");
       e.preventDefault();
 
-      const playersSpan = [];
       const playersInputForm = [];
 
       playersInputForm[0] = document.querySelector(
@@ -186,9 +191,6 @@ const displayController = (() => {
       playersInputForm[1] = document.querySelector(
         "#form-player-two-name"
       ).value;
-
-      playersSpan[0] = document.querySelector("span#player-one-name");
-      playersSpan[1] = document.querySelector("span#player-two-name");
 
       playersSpan[0].textContent = playersInputForm[0];
       playersSpan[1].textContent = playersInputForm[1];
