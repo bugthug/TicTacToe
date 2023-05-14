@@ -161,8 +161,8 @@ const displayController = (() => {
           if (!cell.disabled) isTie = false;
         });
         if (isTie) {
-          winnerParagraphElement.text = "Nobody";
           endGameScreenElement.classList.remove("hidden");
+          winnerParagraphElement.textContent = "Nobody";
         }
       })();
     }
