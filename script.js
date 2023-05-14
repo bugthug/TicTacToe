@@ -101,6 +101,16 @@ const gameBoard = (() => {
 const displayController = (() => {
   const cellButtonNodeList = document.querySelectorAll("#game-board>button");
 
+  function setupContinueBtn() {
+    function handleClickContinue() {
+      displayController.resetGame();
+      this.classList.add("hidden");
+    }
+
+    const continueBtnElement = document.querySelector("#continueBtn");
+    continueBtnElement.addEventListener("click", handleClickContinue);
+  }
+
   function resetGame() {
     gameBoard.resetBoardCells();
     cellButtonNodeList.forEach((cell) => {
@@ -110,8 +120,13 @@ const displayController = (() => {
   }
 
   function handleCellClick() {
+    const playerOneScoreElement = document.querySelector("#player-one-score");
+    const playerTwoScoreElement = document.querySelector("#player-two-score");
+    const continueBtnElement = document.querySelector("#continueBtn");
+
     let currentPlayerSymbol = "";
     this.disabled = "disabled";
+
     if (gameState.playerSymbol === "x") currentPlayerSymbol = "o";
     if (gameState.playerSymbol === "o") currentPlayerSymbol = "x";
 
@@ -123,15 +138,27 @@ const displayController = (() => {
     if (winner !== null) {
       alert(`${winner.toUpperCase()} is the winner!`);
       if (winner === "o") {
-        const playerScoreElement = document.querySelector("#player-one-score");
-        playerScoreElement.textContent =
-          parseInt(playerScoreElement.textContent, 10) + 1;
+        playerOneScoreElement.textContent =
+          parseInt(playerOneScoreElement.textContent, 10) + 1;
       } else {
-        const playerScoreElement = document.querySelector("#player-two-score");
-        playerScoreElement.textContent =
-          parseInt(playerScoreElement.textContent, 10) + 1;
+        playerTwoScoreElement.textContent =
+          parseInt(playerTwoScoreElement.textContent, 10) + 1;
       }
-      resetGame();
+      cellButtonNodeList.forEach((button) => {
+        button.disabled = "disabled";
+      });
+      continueBtnElement.classList.remove("hidden");
+    } else {
+      (function detectTie() {
+        let isTie = true;
+        cellButtonNodeList.forEach((cell) => {
+          if (!cell.disabled) isTie = false;
+        });
+        if (isTie) {
+          alert("Tie!");
+          continueBtnElement.classList.remove("hidden");
+        }
+      })();
     }
 
     gameState.playerSymbol = currentPlayerSymbol;
@@ -171,12 +198,13 @@ const displayController = (() => {
       scoreboardElement.classList.remove("hidden");
 
       addEventListenerToButtons();
+      setupContinueBtn();
     }
     const letsPlayBtn = document.querySelector("#submit-form");
     letsPlayBtn.addEventListener("click", handleLetsPlayBtnClick);
   }
 
-  return { startGameOnSubmit };
+  return { startGameOnSubmit, resetGame };
 })();
 
 displayController.startGameOnSubmit();
