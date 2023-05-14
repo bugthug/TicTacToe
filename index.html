@@ -5,20 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TicTacToe</title>
-    <link rel="stylesheet" href="./dist/output.css">
+    <link rel="stylesheet" href="./dist/output.css" />
     <script src="./script.js" defer></script>
   </head>
-  <body class="grid grid-cols-3 auto-rows-max [&>*]:p-5">
-    <div id="gameBoard" class="grid grid-cols-3 auto-rows-max [&>*]:p-5">
-      <button data-cell-position="0" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="1" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="2" class="border-b-4 border-b-slate-800"></button>
-      <button data-cell-position="3" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="4" class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="5" class="border-b-4 border-b-slate-800"></button>
-      <button data-cell-position="6" class="border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="7" class="border-r-4 border-r-slate-800"></button>
-      <button data-cell-position="8" class=""></div>
+  <body class="bg-slate-400 grid grid-cols-3 auto-rows-max [&>*]:p-5">
+    <form action="get">
+      <label class="block" for="player-one-name">Player One Name</label>
+      <input
+        class="p-1 border-2 bg-slate-300"
+        type="text"
+        name="player-one-name"
+        id="form-player-one-name"
+      />
+
+      <label class="block" for="player-two-name">Player Two Name</label>
+      <input
+        class="p-1 border-2 bg-slate-300"
+        type="text"
+        name="player-two-name"
+        id="form-player-two-name"
+      />
+      <div class="mt-4">
+        <button
+          id="submit-form"
+          class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        >
+          Let's play!
+        </button>
+      </div>
+    </form>
+    <div id="game-board" class="grid grid-cols-3 auto-rows-max [&>*]:p-5 hidden">
+      <button
+        data-cell-position="0"
+        class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"
+      ></button>
+      <button
+        data-cell-position="1"
+        class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"
+      ></button>
+      <button
+        data-cell-position="2"
+        class="border-b-4 border-b-slate-800"
+      ></button>
+      <button
+        data-cell-position="3"
+        class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"
+      ></button>
+      <button
+        data-cell-position="4"
+        class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"
+      ></button>
+      <button
+        data-cell-position="5"
+        class="border-b-4 border-b-slate-800"
+      ></button>
+      <button
+        data-cell-position="6"
+        class="border-r-4 border-r-slate-800"
+      ></button>
+      <button
+        data-cell-position="7"
+        class="border-r-4 border-r-slate-800"
+      ></button>
+      <button data-cell-position="8" class=""></button>
+    </div>
+    <div id="scoreboard" class="players-scores hidden">
+      <div>
+        <span id="player-one-name">Player One</span>'s score:
+        <span id="player-one-score">0</span>
+      </div>
+      <div>
+        <span id="player-two-name">Player Two</span>'s score:
+        <span id="player-tow-score">0</span>
+      </div>
     </div>
   </body>
 </html>

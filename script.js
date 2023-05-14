@@ -1,18 +1,26 @@
 const gameState = (() => {
-  const cellButtonNodeList = document.querySelectorAll("#gameBoard>button");
-
-  // See displayController.handleBtnClick for explanation of why
+  // See displayController.handleBtnClick for explanation of why starting position is 'x' and not 'o'.
   const playerSymbol = "x";
-  return { playerSymbol, cellButtonNodeList };
+  return { playerSymbol };
 })();
 
-const playerFactory = (() => {
-    const playerSymbol = 'x';
-    
-})
+const playerFactory = (playerSymbol, playerName) => {
+  const getPlayerSymobl = () => playerSymbol;
+  const playerScore = 0;
+  const getPlayerName = () => playerName;
+
+  return { getPlayerSymobl, playerScore, getPlayerName };
+};
+
+const player1 = playerFactory("x", "aviv");
+const player2 = playerFactory("o", "name");
 
 const gameBoard = (() => {
   const boardCells = [];
+
+  const resetBoardCells = () => {
+    boardCells.length = 0;
+  };
   const renderBoardCellsArray = () => {
     for (let currentCell = 0; currentCell < 9; currentCell += 1) {
       // child selector start from 1, but js arrays start from 0;
@@ -74,7 +82,7 @@ const gameBoard = (() => {
       Checking diagonals is done manually since there is  
       no easily discernable mathematical pattern
   
-      winning positions (see previous comment)
+      winning positions
   
       0, 4, 8
       2, 4, 6
@@ -98,11 +106,54 @@ const gameBoard = (() => {
     return null;
   };
 
-  return { whoWon, move };
+  return { whoWon, move, resetBoardCells };
 })();
 
 const displayController = (() => {
-  function handleBtnClick() {
+  const cellButtonNodeList = document.querySelectorAll("#game-board>button");
+
+  const addEventListenerToButtons = () => {
+    cellButtonNodeList.forEach((button) => {
+      button.addEventListener("click", handleCellClick);
+    });
+  };
+
+  function resetGame() {
+    gameBoard.resetBoardCells();
+    cellButtonNodeList.forEach(cell => {
+        cell.disabled = '';
+        cell.textContent = '';
+    });
+  }
+
+  function startGameOnSubmit() {
+    function handleLetsPlayBtnClick(e) {
+        const gameBoardElement = document.querySelector('#game-board');
+        const scoreboardElement = document.querySelector('#scoreboard');
+        e.preventDefault();
+
+        const playersSpan = [];
+        const playersInputForm = [];
+
+        playersInputForm[0] = document.querySelector('#form-player-one-name').value;
+        playersInputForm[1] = document.querySelector('#form-player-two-name').value;
+
+        playersSpan[0] = document.querySelector('#player-one-name');
+        playersSpan[1] = document.querySelector('#player-two-name');
+
+        playersSpan[0].textContent = playersInputForm[0];
+        playersSpan[1].textContent = playersInputForm[1];
+
+        gameBoardElement.classList.remove('hidden');
+        scoreboardElement.classList.remove('hidden');
+
+        addEventListenerToButtons();
+    }
+    const letsPlayBtn = document.querySelector('#submit-form');
+    letsPlayBtn.addEventListener('click', handleLetsPlayBtnClick)
+} 
+
+  function handleCellClick() {
     let currentPlayerSymbol = "";
     this.disabled = "disabled";
     if (gameState.playerSymbol === "x") currentPlayerSymbol = "o";
@@ -114,21 +165,17 @@ const displayController = (() => {
     const winner = gameBoard.whoWon();
 
     if (winner !== null) {
-      alert(`${winner} is the winner!`);
-      gameState.cellButtonNodeList.forEach(button => {
-        button.disabled = "disabled";
-      });
+      alert(`${winner.toUpperCase()} is the winner!`);
+      resetGame();
     }
+
 
     gameState.playerSymbol = currentPlayerSymbol;
   }
 
-  const addEventListenerToButtons = () => {
-    gameState.cellButtonNodeList.forEach((button) => {
-      button.addEventListener("click", handleBtnClick);
-    });
-  };
-  return { addEventListenerToButtons };
+  return { startGameOnSubmit };
 })();
 
-displayController.addEventListenerToButtons();
+
+
+displayController.startGameOnSubmit();
