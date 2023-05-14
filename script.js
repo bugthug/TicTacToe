@@ -4,7 +4,6 @@ const gameState = (() => {
   return { playerSymbol };
 })();
 
-
 const gameBoard = (() => {
   const boardCells = [];
 
@@ -104,9 +103,9 @@ const displayController = (() => {
 
   function resetGame() {
     gameBoard.resetBoardCells();
-    cellButtonNodeList.forEach(cell => {
-        cell.disabled = '';
-        cell.textContent = '';
+    cellButtonNodeList.forEach((cell) => {
+      cell.disabled = "";
+      cell.textContent = "";
     });
   }
 
@@ -123,16 +122,17 @@ const displayController = (() => {
 
     if (winner !== null) {
       alert(`${winner.toUpperCase()} is the winner!`);
-      if (winner === 'o') {
-        const playerScoreElement = document.querySelector('#player-one-score');
-        playerScoreElement.textContent = parseInt(playerScoreElement.textContent, 10) + 1;
+      if (winner === "o") {
+        const playerScoreElement = document.querySelector("#player-one-score");
+        playerScoreElement.textContent =
+          parseInt(playerScoreElement.textContent, 10) + 1;
       } else {
-        const playerScoreElement = document.querySelector('#player-two-score');
-        playerScoreElement.textContent = parseInt(playerScoreElement.textContent, 10) + 1;
+        const playerScoreElement = document.querySelector("#player-two-score");
+        playerScoreElement.textContent =
+          parseInt(playerScoreElement.textContent, 10) + 1;
       }
       resetGame();
     }
-
 
     gameState.playerSymbol = currentPlayerSymbol;
   }
@@ -145,40 +145,38 @@ const displayController = (() => {
 
   function startGameOnSubmit() {
     function handleLetsPlayBtnClick(e) {
-        const gameBoardElement = document.querySelector('#game-board');
-        const scoreboardElement = document.querySelector('#scoreboard');
-        const formElement = document.querySelector('form');
-        e.preventDefault();
+      const gameBoardElement = document.querySelector("#game-board");
+      const scoreboardElement = document.querySelector("#scoreboard");
+      const formElement = document.querySelector("form");
+      e.preventDefault();
 
-        const playersSpan = [];
-        const playersInputForm = [];
+      const playersSpan = [];
+      const playersInputForm = [];
 
-        playersInputForm[0] = document.querySelector('#form-player-one-name').value;
-        playersInputForm[1] = document.querySelector('#form-player-two-name').value;
+      playersInputForm[0] = document.querySelector(
+        "#form-player-one-name"
+      ).value;
+      playersInputForm[1] = document.querySelector(
+        "#form-player-two-name"
+      ).value;
 
-        playersSpan[0] = document.querySelector('span#player-one-name');
-        playersSpan[1] = document.querySelector('span#player-two-name');
+      playersSpan[0] = document.querySelector("span#player-one-name");
+      playersSpan[1] = document.querySelector("span#player-two-name");
 
-        playersSpan[0].textContent = playersInputForm[0];
-        playersSpan[1].textContent = playersInputForm[1];
+      playersSpan[0].textContent = playersInputForm[0];
+      playersSpan[1].textContent = playersInputForm[1];
 
-        
+      formElement.classList.add("hidden");
+      gameBoardElement.classList.remove("hidden");
+      scoreboardElement.classList.remove("hidden");
 
-        formElement.classList.add('hidden');
-        gameBoardElement.classList.remove('hidden');
-        scoreboardElement.classList.remove('hidden');
-
-        addEventListenerToButtons();
+      addEventListenerToButtons();
     }
-    const letsPlayBtn = document.querySelector('#submit-form');
-    letsPlayBtn.addEventListener('click', handleLetsPlayBtnClick)
-} 
-
-
+    const letsPlayBtn = document.querySelector("#submit-form");
+    letsPlayBtn.addEventListener("click", handleLetsPlayBtnClick);
+  }
 
   return { startGameOnSubmit };
 })();
-
-
 
 displayController.startGameOnSubmit();

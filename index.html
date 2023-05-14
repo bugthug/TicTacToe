@@ -34,7 +34,10 @@
         </button>
       </div>
     </form>
-    <div id="game-board" class="grid grid-cols-3 auto-rows-max [&>*]:p-5 hidden">
+    <div
+      id="game-board"
+      class="grid grid-cols-3 auto-rows-max [&>*]:p-5 hidden"
+    >
       <button
         data-cell-position="0"
         class="border-b-4 border-b-slate-800 border-r-4 border-r-slate-800"
@@ -71,13 +74,23 @@
     </div>
     <div id="scoreboard" class="players-scores hidden">
       <div>
-        <span id="player-one-name">Player One</span>'s score:
+        🧍 <span id="player-one-name">Player One</span>'s score (O):
         <span id="player-one-score">0</span>
       </div>
       <div>
-        <span id="player-two-name">Player Two</span>'s score:
-        <span id="player-tow-score">0</span>
+        🧍 <span id="player-two-name">Player Two</span>'s score (X):
+        <span id="player-two-score">0</span>
       </div>
+      <div></div>
+    </div>
+    <div></div>
+    <div>
+      
+      <button
+        class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+      >
+        Continue
+      </button>
     </div>
   </body>
 </html>
