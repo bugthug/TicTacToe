@@ -4,16 +4,6 @@ const gameState = (() => {
   return { playerSymbol };
 })();
 
-const playerFactory = (playerSymbol, playerName) => {
-  const getPlayerSymobl = () => playerSymbol;
-  const playerScore = 0;
-  const getPlayerName = () => playerName;
-
-  return { getPlayerSymobl, playerScore, getPlayerName };
-};
-
-const player1 = playerFactory("x", "aviv");
-const player2 = playerFactory("o", "name");
 
 const gameBoard = (() => {
   const boardCells = [];
@@ -26,7 +16,7 @@ const gameBoard = (() => {
       // child selector start from 1, but js arrays start from 0;
       const currentCellChild = currentCell + 1;
       const currentCellElement = document.querySelector(
-        `button:nth-child(${currentCellChild})`
+        `#game-board>button:nth-child(${currentCellChild})`
       );
       currentCellElement.textContent = boardCells[currentCell];
     }
@@ -112,12 +102,6 @@ const gameBoard = (() => {
 const displayController = (() => {
   const cellButtonNodeList = document.querySelectorAll("#game-board>button");
 
-  const addEventListenerToButtons = () => {
-    cellButtonNodeList.forEach((button) => {
-      button.addEventListener("click", handleCellClick);
-    });
-  };
-
   function resetGame() {
     gameBoard.resetBoardCells();
     cellButtonNodeList.forEach(cell => {
@@ -125,33 +109,6 @@ const displayController = (() => {
         cell.textContent = '';
     });
   }
-
-  function startGameOnSubmit() {
-    function handleLetsPlayBtnClick(e) {
-        const gameBoardElement = document.querySelector('#game-board');
-        const scoreboardElement = document.querySelector('#scoreboard');
-        e.preventDefault();
-
-        const playersSpan = [];
-        const playersInputForm = [];
-
-        playersInputForm[0] = document.querySelector('#form-player-one-name').value;
-        playersInputForm[1] = document.querySelector('#form-player-two-name').value;
-
-        playersSpan[0] = document.querySelector('#player-one-name');
-        playersSpan[1] = document.querySelector('#player-two-name');
-
-        playersSpan[0].textContent = playersInputForm[0];
-        playersSpan[1].textContent = playersInputForm[1];
-
-        gameBoardElement.classList.remove('hidden');
-        scoreboardElement.classList.remove('hidden');
-
-        addEventListenerToButtons();
-    }
-    const letsPlayBtn = document.querySelector('#submit-form');
-    letsPlayBtn.addEventListener('click', handleLetsPlayBtnClick)
-} 
 
   function handleCellClick() {
     let currentPlayerSymbol = "";
@@ -166,12 +123,58 @@ const displayController = (() => {
 
     if (winner !== null) {
       alert(`${winner.toUpperCase()} is the winner!`);
+      if (winner === 'o') {
+        const playerScoreElement = document.querySelector('#player-one-score');
+        playerScoreElement.textContent = parseInt(playerScoreElement.textContent, 10) + 1;
+      } else {
+        const playerScoreElement = document.querySelector('#player-two-score');
+        playerScoreElement.textContent = parseInt(playerScoreElement.textContent, 10) + 1;
+      }
       resetGame();
     }
 
 
     gameState.playerSymbol = currentPlayerSymbol;
   }
+
+  const addEventListenerToButtons = () => {
+    cellButtonNodeList.forEach((button) => {
+      button.addEventListener("click", handleCellClick);
+    });
+  };
+
+  function startGameOnSubmit() {
+    function handleLetsPlayBtnClick(e) {
+        const gameBoardElement = document.querySelector('#game-board');
+        const scoreboardElement = document.querySelector('#scoreboard');
+        const formElement = document.querySelector('form');
+        e.preventDefault();
+
+        const playersSpan = [];
+        const playersInputForm = [];
+
+        playersInputForm[0] = document.querySelector('#form-player-one-name').value;
+        playersInputForm[1] = document.querySelector('#form-player-two-name').value;
+
+        playersSpan[0] = document.querySelector('span#player-one-name');
+        playersSpan[1] = document.querySelector('span#player-two-name');
+
+        playersSpan[0].textContent = playersInputForm[0];
+        playersSpan[1].textContent = playersInputForm[1];
+
+        
+
+        formElement.classList.add('hidden');
+        gameBoardElement.classList.remove('hidden');
+        scoreboardElement.classList.remove('hidden');
+
+        addEventListenerToButtons();
+    }
+    const letsPlayBtn = document.querySelector('#submit-form');
+    letsPlayBtn.addEventListener('click', handleLetsPlayBtnClick)
+} 
+
+
 
   return { startGameOnSubmit };
 })();
